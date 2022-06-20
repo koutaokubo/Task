@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,25 +51,36 @@ public class TodoController {
   }
 
   @RequestMapping("/todo/del/{id}")
-  public String destroy(@PathVariable Integer id) {
+  public String destroy(@PathVariable Long id) {
     todoRepository.deleteById(id);
     return "redirect:/todo";
   }  
 
   @RequestMapping(value = "/todo/check/{id}/{done}")
-  public String check(@PathVariable Integer id, @PathVariable boolean done) {
+  public String check(@PathVariable Long id, @PathVariable boolean done) {
     todoRepository.checkTask(!done, id);
     return "redirect:/todo";
   }
 
-  @RequestMapping("/staff/edit/{id}")
-  public String edit(@PathVariable Integer id, Model model, Todo todo) {
-    
+  @RequestMapping("/todo/edit/{id}")
+  public String edit(@PathVariable Long id, Model model, Todo todo) {
+    Todo todo1 = this.todoRepository.findById(id).orElseThrow();
+    if (todo.getTitle() == null) {
+      todo.setTitle(todo1.getTitle());
+      todo.setDetail(todo1.getDetail());
+    }
+    model.addAttribute("todo", todo);
+    return "edit";
   }
 
   @RequestMapping("/todo/edit/{id}/exe")
-  public String update(@PathVariable Integer id, Todo todo) {
-    todoRepository.updateTitleAndDetail(todo.getTitle(), todo.getDetail(), id);
+  public String update(@PathVariable Long id, Model model, @Validated Todo todo, BindingResult result) {
+    Todo todo1 = this.todoRepository.findById(id).orElseThrow();
+    if (result.hasErrors()) {
+      model.addAttribute("todo", todo1);
+      return "edit";
+    }
+    this.todoRepository.updateTitleAndDetail(todo.getTitle(), todo.getDetail(), id);
     return "redirect:/todo";
   }
 }

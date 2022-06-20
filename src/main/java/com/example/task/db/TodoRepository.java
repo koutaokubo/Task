@@ -15,13 +15,15 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
   @Transactional
   @Modifying
   @Query(value = "delete from task where id = :pid", nativeQuery = true)
-  void deleteById(@Param("pid") Integer pid);
+  void deleteById(@Param("pid") Long pid);
 
   @Transactional
   @Modifying
   @Query(value = "UPDATE task AS t SET t.done = :pdone WHERE t.id = :pid", nativeQuery = true)
-  void checkTask(@Param("pdone") boolean pdone, @Param("pid") Integer pid);
+  void checkTask(@Param("pdone") boolean pdone, @Param("pid") Long pid);
 
+  @Transactional
+  @Modifying
   @Query(value = "update task set title = :ptitle, detail = :pdetail where id = :pid", nativeQuery = true)
-  void updateTitleAndDetail(@Param("ptitle") String ptitle, @Param("pdetail") String pdetail, @Param("pid") Integer id);
+  void updateTitleAndDetail(@Param("ptitle") String ptitle, @Param("pdetail") String pdetail, @Param("pid") Long id);
 }

@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="task")
@@ -19,8 +20,10 @@ public class Todo {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private Long id;
+  @Size(min=1, max = 20, message = "input 1 to 20")
   private String title;
+  @Size(min = 1, max = 100, message = "input 1 to 100")
   private String detail;
   private boolean done;
   
@@ -32,10 +35,10 @@ public class Todo {
     this.done = done;
   }
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
   public String getTitle() {
