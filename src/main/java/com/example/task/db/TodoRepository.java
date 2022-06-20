@@ -22,4 +22,6 @@ public interface TodoRepository extends JpaRepository<Todo, Long>{
   @Query(value = "UPDATE task AS t SET t.done = :pdone WHERE t.id = :pid", nativeQuery = true)
   void checkTask(@Param("pdone") boolean pdone, @Param("pid") Integer pid);
 
+  @Query(value = "update task set title = :ptitle, detail = :pdetail where id = :pid", nativeQuery = true)
+  void updateTitleAndDetail(@Param("ptitle") String ptitle, @Param("pdetail") String pdetail, @Param("pid") Integer id);
 }

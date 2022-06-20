@@ -12,7 +12,7 @@
   <h1>TodoList</h1>
   <table class="table table-success table-striped">
     <tr>
-      <th>TODO</th><th>ID</th><th>タイトル</th><th>詳細</th><th>削除</th>
+      <th>TODO</th><th>ID</th><th>タイトル</th><th>詳細</th><th>削除</th><th>編集</th>
     </tr>
     <tr th:each="todo: ${todoList}">
       <td>
@@ -33,9 +33,14 @@
           <input type="submit" value="削除">
         </form>
       </td>
+      <td>
+        <form th:action="@{/todo/edit/{id}(id = ${todo.id})}" method="get">
+          <input type="submit" value="編集">
+        </form>
+      </td>
     </tr>
     <tr>
-      <td colspan="5"><a th:href="@{/todo/add}">タスク作成</a></td>
+      <td colspan="6"><a th:href="@{/todo/add}">タスク作成</a></td>
     </tr>
   </table>
 </body>

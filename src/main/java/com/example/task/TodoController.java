@@ -59,4 +59,15 @@ public class TodoController {
     todoRepository.checkTask(!done, id);
     return "redirect:/todo";
   }
+
+  @RequestMapping("/staff/edit/{id}")
+  public String edit(@PathVariable Integer id, Model model, Todo todo) {
+    
+  }
+
+  @RequestMapping("/todo/edit/{id}/exe")
+  public String update(@PathVariable Integer id, Todo todo) {
+    todoRepository.updateTitleAndDetail(todo.getTitle(), todo.getDetail(), id);
+    return "redirect:/todo";
+  }
 }
