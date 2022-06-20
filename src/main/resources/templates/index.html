@@ -16,7 +16,7 @@
     </tr>
     <tr th:each="todo: ${todoList}">
       <td>
-        <form th:action="@{/todo/check/{id}/{done}(id = ${todo.id}, done = ${todo.done})}" method="get">
+        <form th:action="@{/todo/check/{id}(id = ${todo.id})}" method="get">
           <th:block th:if="${todo.done}">
             <input type="submit" value="✔">
           </th:block>

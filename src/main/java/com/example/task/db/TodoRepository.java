@@ -12,15 +12,17 @@ import com.example.task.entity.Todo;
 
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long>{
-  @Transactional
-  @Modifying
-  @Query(value = "delete from task where id = :pid", nativeQuery = true)
-  void deleteById(@Param("pid") Long pid);
+  // @Transactional
+  // @Modifying
+  // @Query(value = "delete from task where id = :pid", nativeQuery = true)
+  // void deleteById(@Param("pid") Long pid);
 
   @Transactional
   @Modifying
-  @Query(value = "UPDATE task AS t SET t.done = :pdone WHERE t.id = :pid", nativeQuery = true)
-  void checkTask(@Param("pdone") boolean pdone, @Param("pid") Long pid);
+  // @Query(value = "UPDATE task AS t SET t.done = :pdone WHERE t.id = :pid", nativeQuery = true)
+  // void checkTask(@Param("pdone") boolean pdone, @Param("pid") Long pid);
+  @Query(value = "update task set done = !done where id = :pid", nativeQuery = true)
+  void checkTodo(@Param("pid") Long id);
 
   @Transactional
   @Modifying

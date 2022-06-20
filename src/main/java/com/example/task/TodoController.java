@@ -52,13 +52,15 @@ public class TodoController {
 
   @RequestMapping("/todo/del/{id}")
   public String destroy(@PathVariable Long id) {
+    // todoRepository.deleteById(id);
     todoRepository.deleteById(id);
     return "redirect:/todo";
   }  
 
-  @RequestMapping(value = "/todo/check/{id}/{done}")
-  public String check(@PathVariable Long id, @PathVariable boolean done) {
-    todoRepository.checkTask(!done, id);
+  @RequestMapping("/todo/check/{id}")
+  public String check1(@PathVariable Long id, Todo todo) {
+    // this.todoRepository.checkTask(todo.isDone(), id);
+    this.todoRepository.checkTodo(id);
     return "redirect:/todo";
   }
 
