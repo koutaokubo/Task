@@ -36,17 +36,20 @@ public class TodoController {
   }
 
   @RequestMapping(value = "/todo/add", method = RequestMethod.POST)
-  public String create(Model model, Todo todo) {
+  public String create(Model model, @Validated Todo todo, BindingResult result) {
     // mv.setViewName("createTask");
     // mv.addObject("id", todo.getId());
     // mv.addObject("title", todo.getTitle());
     // mv.addObject("detail", todo.getDetail());
     // return mv;
+    if (result.hasErrors()) {
+      return "createTask";
+    }
     Todo todo1 = new Todo();
-    todo1.setId(todo.getId());
+    // todo1.setId(todo.getId());
     todo1.setTitle(todo.getTitle());
     todo1.setDetail(todo.getDetail());
-    todoRepository.save(todo1);
+    this.todoRepository.save(todo1);
     return "redirect:/todo";
   }
 

@@ -15,7 +15,9 @@
     <div class="form-group my-3">
       <form method="post" action="/todo/add" th:object="${todo}">
         タスク名 <input type="text" name="title" class="form-control mb-2" />
+        <div th:if="#{fields.hasErrors('title')}" th:errors="*{title}" class="error">エラー</div>
         詳細 <input type="text" name="detail" class="form-control mb-2" />
+        <div th:if="#{fields.hasErrors('detail')}" th:errors="*{detail}" class="error">エラー</div>
         <input type="submit" class="btn btn-warning px-4" value="送信" />
       </form>
     </div>
